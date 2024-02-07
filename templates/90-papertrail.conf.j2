@@ -17,4 +17,9 @@ $PreserveFQDN {{ papertrail_preserve_fqdn | default('off') }}
  Queue.SaveOnShutdown="on"
  Queue.TimeoutEnqueue="2"
  Queue.DiscardSeverity="0"
+
+ KeepAlive="on"
+ KeepAlive.Probes="3"
+ KeepAlive.Time="120"
+ KeepAlive.Interval="30"
 )
