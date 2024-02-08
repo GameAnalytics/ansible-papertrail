@@ -1,19 +1,25 @@
 $DefaultNetstreamDriverCAFile /etc/papertrail-bundle.pem # trust these CAs
 $PreserveFQDN {{ papertrail_preserve_fqdn | default('off') }}
-$ActionSendStreamDriver gtls # use gtls netstream driver
-$ActionSendStreamDriverMode 1 # require TLS
-$ActionSendStreamDriverAuthMode x509/name # authenticate by hostname
-$ActionSendStreamDriverPermittedPeer *.papertrailapp.com
-$ActionResumeInterval 10
-$ActionQueueSize 100000
-$ActionQueueDiscardMark 97500
-$ActionQueueHighWaterMark 80000
-$ActionQueueType LinkedList
-$ActionQueueFileName papertrailqueue
-$ActionQueueCheckpointInterval 100
-$ActionQueueMaxDiskSpace 2g
-$ActionResumeRetryCount -1
-$ActionQueueSaveOnShutdown on
-$ActionQueueTimeoutEnqueue 2
-$ActionQueueDiscardSeverity 0
-*.* @@{{ papertrail_host }}:{{ papertrail_port }}
+*.* action(type="omfwd" Target="{{ papertrail_host }}" Port=":{{ papertrail_port }}" Protocol="tcp"
+ StreamDriver="gtls" # use gtls netstream driver
+ StreamDriverMode="1" # require TLS
+ StreamDriverAuthMode="x509/name" # authenticate by hostname
+ StreamDriverPermittedPeers="*.papertrailapp.com"
+ Action.ResumeInterval="10"
+ Queue.Size="100000"
+ Queue.DiscardMark="97500"
+ Queue.HighWaterMark="80000"
+ Queue.Type="LinkedList"
+ Queue.FileName="papertrailqueue"
+ Queue.CheckpointInterval="100"
+ Queue.MaxDiskSpace="2g"
+ Action.ResumeRetryCount="-1"
+ Queue.SaveOnShutdown="on"
+ Queue.TimeoutEnqueue="2"
+ Queue.DiscardSeverity="0"
+
+ KeepAlive="on"
+ KeepAlive.Probes="3"
+ KeepAlive.Time="120"
+ KeepAlive.Interval="30"
+)
