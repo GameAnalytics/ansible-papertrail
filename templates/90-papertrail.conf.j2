@@ -1,6 +1,6 @@
 $DefaultNetstreamDriverCAFile /etc/papertrail-bundle.pem # trust these CAs
 $PreserveFQDN {{ papertrail_preserve_fqdn | default('off') }}
-*.* action(type="omfwd" Target="{{ papertrail_host }}" Port=":{{ papertrail_port }}" Protocol="tcp"
+*.* action(type="omfwd" Target="{{ papertrail_host }}" Port="{{ papertrail_port }}" Protocol="tcp"
  StreamDriver="gtls" # use gtls netstream driver
  StreamDriverMode="1" # require TLS
  StreamDriverAuthMode="x509/name" # authenticate by hostname
