@@ -1,0 +1,13 @@
+---
+- name: Import local rsyslogd profile to apparmor
+  ansible.builtin.lineinfile:
+    path: "{{ apparmor_rsyslogd_profile_path }}"
+    search_string: '#include <local/usr.sbin.rsyslogd>'
+    line: '  include <local/usr.sbin.rsyslogd>'
+
+- name: Allow rsyslogd read Papertrail PEM in apparmor profile
+  ansible.builtin.lineinfile:
+    path: "{{ apparmor_rsyslogd_local_profile_path }}"
+    line: "{{ papertrail_pem_path }} r,"
+    state: present
+  notify: Reload apparmor

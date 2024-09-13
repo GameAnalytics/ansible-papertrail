@@ -4,3 +4,6 @@
 
 - name: Restart Rsyslog
   service: name=rsyslog state=restarted
+
+- name: Reload apparmor
+  service: name=apparmor state=reloaded
