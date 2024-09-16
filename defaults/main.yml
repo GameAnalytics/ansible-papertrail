@@ -10,3 +10,7 @@ papertrail_remote_syslog_config_paths:
   systemd:
     path: /lib/systemd/system/remote_syslog.service
 papertrail_remote_user: "papertrail"
+
+# Apparmor
+apparmor_rsyslogd_profile_path: /etc/apparmor.d/usr.sbin.rsyslogd
+apparmor_rsyslogd_local_profile_path: /etc/apparmor.d/local/usr.sbin.rsyslogd

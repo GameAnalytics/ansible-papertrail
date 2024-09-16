@@ -1,4 +1,7 @@
 ---
+- name: Reload apparmor
+  service: name=apparmor state=reloaded
+
 - name: Restart remote_syslog
   service: name=remote_syslog state=restarted
 
